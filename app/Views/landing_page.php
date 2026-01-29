@@ -18,7 +18,7 @@
                 <div class="flex items-center gap-3 sm:gap-4">
                     
                 <a href="/" class="flex items-center gap-3 sm:gap-4">
-                    <img src="logo.png" alt="zhlogo" class="h-14 w-14 object-contain sm:h-20 sm:w-20">
+                    <img src="<?= base_url('logo.png') ?>" alt="zhlogo" class="h-14 w-14 object-contain sm:h-20 sm:w-20">
                     <span class="hidden text-2xl font-semibold sm:inline sm:text-3xl">Zero Hunger</span>
                 </a>
                 </div>
@@ -43,12 +43,12 @@
                     <button class="btn-2nd mt-5 text-base sm:mt-6 sm:text-xl" id="openDonateHero">Make change now</button>
                 </div>
                 <div class="w-full sm:w-2/5">
-                    <img src="hero_img.png" alt="hero image" class="-ml-6 -mt-6 h-auto w-full max-w-[520px] scale-[1.15] origin-left object-contain opacity-90 sm:-ml-52 sm:-mt-10 sm:max-w-[900px] sm:scale-[1.7]">
+                    <img src="<?= base_url('hero_img.png') ?>" alt="hero image" class="-ml-6 -mt-6 h-auto w-full max-w-[520px] scale-[1.15] origin-left object-contain opacity-90 sm:-ml-52 sm:-mt-10 sm:max-w-[900px] sm:scale-[1.7]">
                 </div>
             </section>
             <hr class="mx-auto w-full max-w-6xl border-t">
             <section id="about" class="relative mx-auto flex min-h-[100svh] w-full max-w-6xl flex-col items-center justify-center scroll-mt-24 px-4 py-10 snap-start sm:px-6">
-                <img src="logo.png" alt="" class="pointer-events-none absolute left-1/2 top-1/2 w-[420px] -translate-x-1/2 -translate-y-1/2 opacity-10 sm:w-[720px]">
+                <img src="<?= base_url('logo.png') ?>" alt="" class="pointer-events-none absolute left-1/2 top-1/2 w-[420px] -translate-x-1/2 -translate-y-1/2 opacity-10 sm:w-[720px]">
                 <div class="relative z-10 max-w-4xl text-left">
                     <h2 class="text-4xl font-bold font-tilt sm:text-7xl">About us</h2>
                     <p class="mt-3 text-base font-times leading-relaxed sm:mt-4 sm:text-xl">
