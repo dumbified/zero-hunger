@@ -6,7 +6,7 @@
         <meta name="description" content="The small framework with powerful features">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" type="image/png" href="/favicon.ico">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tilt+Warp&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap">
 
         <!-- STYLES -->
         <link rel="stylesheet" href="/global.css">
@@ -19,7 +19,7 @@
                     
                 <a href="/" class="flex items-center gap-3 sm:gap-4">
                     <img src="<?= base_url('logo.png') ?>" alt="zhlogo" class="h-14 w-14 object-contain sm:h-20 sm:w-20">
-                    <span class="hidden text-2xl font-semibold sm:inline sm:text-3xl">Zero Hunger</span>
+                    <span class="hidden text-2xl font-semibold font-playfair sm:inline sm:text-3xl">Zero Hunger</span>
                 </a>
                 </div>
                 <nav class="flex items-center gap-3 text-base sm:gap-8 sm:text-lg">
@@ -32,7 +32,7 @@
         <main class="min-h-screen">
             <section class="relative mx-auto flex min-h-[100svh] w-full max-w-6xl flex-col items-start gap-10 overflow-hidden px-4 pb-12 pt-28 snap-start sm:flex-row sm:items-center sm:gap-10 sm:px-6 sm:pb-16 sm:pt-24">
                 <div class="relative z-10 w-full sm:w-3/5">
-                    <h1 class="text-5xl font-bold font-tilt sm:text-8xl">
+                    <h1 class="text-5xl font-bold font-serif sm:text-8xl">
                         Waste Less.<br>
                         Feed More.
                     </h1>
@@ -50,7 +50,7 @@
             <section id="about" class="relative mx-auto flex min-h-[100svh] w-full max-w-6xl flex-col items-center justify-center scroll-mt-24 px-4 py-10 snap-start sm:px-6">
                 <img src="<?= base_url('logo.png') ?>" alt="" class="pointer-events-none absolute left-1/2 top-1/2 w-[420px] -translate-x-1/2 -translate-y-1/2 opacity-10 sm:w-[720px]">
                 <div class="relative z-10 max-w-4xl text-left">
-                    <h2 class="text-4xl font-bold font-tilt sm:text-7xl">About us</h2>
+                    <h2 class="text-4xl font-bold font-serif sm:text-7xl">About us</h2>
                     <p class="mt-3 text-base font-times leading-relaxed sm:mt-4 sm:text-xl">
                         We're just a group of ordinary people who think it's crazy that good food goes to
                         the trash while people go hungry. So, we decided to do something about it. We
