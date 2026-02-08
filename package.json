@@ -2,5 +2,12 @@
   "dependencies": {
     "@tailwindcss/cli": "^4.1.18",
     "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "daisyui": "^5.5.18"
+  },
+  "scripts": {
+    "dev": "tailwindcss -i ./app/assets/input.css -o ./public/global.css --watch",
+    "build": "tailwindcss -i ./app/assets/input.css -o ./public/global.css --minify"
   }
 }
