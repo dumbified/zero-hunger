@@ -22,45 +22,68 @@ class Donations extends BaseController
 
     public function index()
     {
-        $status = $this->request->getGet('status');
+        $donorEmail = $this->request->getGet('donor_email');
         $search = $this->request->getGet('search');
-        $page = $this->request->getGet('page') ?? 1;
+        $page = (int) ($this->request->getGet('page') ?? 1);
         $perPage = 20;
 
-        $builder = $this->donationModel->builder();
-
-        // Apply filters
-        if ($status && $status !== 'all') {
-            $builder->where('status', $status);
+        // Viewing one donor's donations (list of donation records for that email)
+        if ($donorEmail !== null && $donorEmail !== '') {
+            $donations = $this->donationModel
+                ->where('email', $donorEmail)
+                ->orderBy('created_at', 'DESC')
+                ->paginate($perPage, 'donations');
+            $pager = $this->donationModel->pager;
+            $donorName = $donations[0]['full_name'] ?? $donorEmail;
+            if (empty($donations)) {
+                $donorName = $donorEmail;
+            }
+            $data = [
+                'title' => 'Donations',
+                'pageTitle' => 'Donation Management',
+                'viewDonorEmail' => $donorEmail,
+                'viewDonorName' => $donorName,
+                'donations' => $donations,
+                'pager' => $pager,
+                'currentStatus' => 'all',
+                'search' => '',
+                'statuses' => ['all', 'pending', 'confirmed', 'scheduled', 'picked_up', 'completed', 'cancelled'],
+            ];
+            return view('admin/donations/index', $data);
         }
+
+        // Unique donors list (group by email)
+        $db = \Config\Database::connect();
+        $builder = $this->donationModel->builder();
+        $builder->select('full_name, email, phone, COUNT(*) as donation_count');
+        $builder->groupBy('email');
 
         if ($search) {
             $builder->groupStart()
                 ->like('full_name', $search)
                 ->orLike('email', $search)
                 ->orLike('phone', $search)
-                ->orLike('food_type', $search)
                 ->groupEnd();
         }
 
-        // Get total count for pagination
-        $total = $builder->countAllResults(false);
+        $compiled = $builder->getCompiledSelect(false);
+        $countSql = "SELECT COUNT(*) as cnt FROM ($compiled) sub";
+        $total = (int) $db->query($countSql)->getRow()->cnt;
 
-        // Apply pagination
-        $donations = $builder->orderBy('created_at', 'DESC')
-            ->limit($perPage, ($page - 1) * $perPage)
-            ->get()
-            ->getResultArray();
+        $builder->orderBy('full_name', 'ASC');
+        $donors = $builder->limit($perPage, ($page - 1) * $perPage)->get()->getResultArray();
 
         $pager = \Config\Services::pager();
         $pager->store('donations', $page, $perPage, $total);
 
         $data = [
-            'title' => 'Donations',
-            'pageTitle' => 'Donation Management',
-            'donations' => $donations,
+            'title' => 'Donors',
+            'pageTitle' => 'Donors',
+            'viewDonorEmail' => null,
+            'donors' => $donors,
+            'donations' => [],
             'pager' => $pager,
-            'currentStatus' => $status ?? 'all',
+            'currentStatus' => 'all',
             'search' => $search,
             'statuses' => ['all', 'pending', 'confirmed', 'scheduled', 'picked_up', 'completed', 'cancelled'],
         ];
@@ -215,46 +238,35 @@ class Donations extends BaseController
 
     public function export()
     {
-        $status = $this->request->getGet('status');
         $search = $this->request->getGet('search');
 
         $builder = $this->donationModel->builder();
-
-        if ($status && $status !== 'all') {
-            $builder->where('status', $status);
-        }
+        $builder->select('full_name, email, phone, COUNT(*) as donation_count');
+        $builder->groupBy('email');
 
         if ($search) {
             $builder->groupStart()
                 ->like('full_name', $search)
                 ->orLike('email', $search)
                 ->orLike('phone', $search)
-                ->orLike('food_type', $search)
                 ->groupEnd();
         }
 
-        $donations = $builder->orderBy('created_at', 'DESC')->get()->getResultArray();
+        $donors = $builder->orderBy('full_name', 'ASC')->get()->getResultArray();
 
-        // Generate CSV
-        $filename = 'donations_' . date('Y-m-d') . '.csv';
+        $filename = 'donors_' . date('Y-m-d') . '.csv';
         header('Content-Type: text/csv');
         header('Content-Disposition: attachment; filename="' . $filename . '"');
 
         $output = fopen('php://output', 'w');
-        fputcsv($output, ['ID', 'Donor Name', 'Email', 'Phone', 'Food Type', 'Quantity', 'Preferred DateTime', 'Pickup Address', 'Status', 'Created At']);
+        fputcsv($output, ['Donor Name', 'Email', 'Phone', 'Donation Count']);
 
-        foreach ($donations as $donation) {
+        foreach ($donors as $donor) {
             fputcsv($output, [
-                $donation['id'],
-                $donation['full_name'],
-                $donation['email'],
-                $donation['phone'],
-                $donation['food_type'],
-                $donation['estimated_quantity'],
-                $donation['preferred_datetime'],
-                $donation['pickup_address'],
-                $donation['status'] ?? 'pending',
-                $donation['created_at'],
+                $donor['full_name'],
+                $donor['email'],
+                $donor['phone'],
+                $donor['donation_count'],
             ]);
         }
 

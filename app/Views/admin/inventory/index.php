@@ -141,7 +141,7 @@
                             <td class="px-6 py-4"><?= str_pad($item['id'], 3, '0', STR_PAD_LEFT) ?></td>
                             <td class="px-6 py-4"><?= esc($item['food_type']) ?></td>
                             <td class="px-6 py-4"><?= esc($item['donor_name'] ?? '—') ?></td>
-                            <td class="px-6 py-4"><?= number_format($item['quantity'], 2) ?> <?= esc($item['unit']) ?></td>
+                            <td class="px-6 py-4"><?php $q = (float)$item['quantity']; echo $q == (int)$q ? (string)(int)$q : number_format($q, 2); ?> <?= esc($item['unit']) ?></td>
                             <td class="px-6 py-4 <?= $expiringClass ?>">
                                 <?= $expDate ? date('M d, Y', strtotime($expDate)) : '-' ?>
                                 <?php if ($isExpired): ?>

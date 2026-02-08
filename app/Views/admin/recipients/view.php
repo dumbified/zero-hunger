@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="text-sm text-gray-700">
                                     <?php foreach ($items as $item): ?>
-                                        <div>• <?= esc($item['food_type'] ?? 'Unknown') ?> - <?= number_format($item['quantity'] ?? 0, 2) ?> <?= esc($item['unit'] ?? '') ?></div>
+                                        <div>• <?= esc($item['food_type'] ?? 'Unknown') ?> - <?php $q = (float)($item['quantity'] ?? 0); echo $q == (int)$q ? (string)(int)$q : number_format($q, 2); ?> <?= esc($item['unit'] ?? '') ?></div>
                                     <?php endforeach; ?>
                                 </div>
                                 <?php if ($distribution['notes']): ?>
