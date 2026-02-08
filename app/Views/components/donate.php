@@ -1,7 +1,7 @@
 <div id="donate" class="fixed inset-0 z-40 hidden items-center justify-center bg-black/50 px-6 flex">
     <div class="w-full max-w-2xl rounded-2xl bg-white p-6 shadow-xl">
         <div class="flex items-start justify-between">
-            <h3 class="text-3xl font-semibold font-tilt">Food Donation</h3>
+            <h3 class="text-3xl font-semibold ">Food Donation</h3>
             <button type="button" id="closeDonate" class="text-xl">✕</button>
         </div>
         <p class="mt-2 text-base font-times">Please share your donation details and we will contact you.</p>

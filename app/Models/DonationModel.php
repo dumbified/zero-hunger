@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class DonationModel extends Model
 {
-    protected $table = 'zerohunger';
+    protected $table = 'donations';
     protected $primaryKey = 'id';
     protected $returnType = 'array';
     protected $allowedFields = [
@@ -18,6 +18,12 @@ class DonationModel extends Model
         'preferred_datetime',
         'pickup_address',
         'notes',
+        'status',
+        'assigned_to',
+        'assigned_driver',
+        'scheduled_time',
+        'internal_notes',
+        'status_history',
     ];
     protected $useTimestamps = true;
     protected $createdField = 'created_at';
