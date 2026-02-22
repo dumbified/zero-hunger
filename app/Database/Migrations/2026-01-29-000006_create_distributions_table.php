@@ -47,6 +47,7 @@ class CreateDistributionsTable extends Migration
 
         $this->forge->addKey('id', true);
         $this->forge->addKey('recipient_id');
+        $this->forge->addForeignKey('recipient_id', 'recipients', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addKey('date');
         $this->forge->createTable('distributions', true);
     }

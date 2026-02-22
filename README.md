@@ -1,68 +1,71 @@
-# CodeIgniter 4 Application Starter
+# Zero Hunger
 
-## What is CodeIgniter?
+A web-based application designed to bridge the gap between food donors (restaurants, supermarkets, individuals) and those in need. By streamlining the process of collecting, managing, and distributing surplus food, we aim to reduce food waste and combat hunger in our community.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## Features
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+### For Community
+*   **Donation Portal:** Easy-to-use form for donors to schedule food pickups.
+*   **Request Help:** Simple interface for individuals or organizations to request food assistance.
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+### For Admin
+*   **Dashboard Analytics:** Overview of total donations, pending requests, and inventory status.
+*   **Donation Management:** Track donations from "Pending" to "Completed". Assign drivers and schedule pickups.
+*   **Inventory System:** Manage food stock with expiration dates and storage locations.
+*   **Distribution Tracking:** Log food deliveries to beneficiaries (orphanages, shelters, families).
+*   **User Management:** Role-based access control (Super Admin, Driver, Viewer).
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+## Tech Stack
 
-## Installation & updates
+*   **Framework:** [CodeIgniter 4](https://codeigniter.com/) (PHP MVC Framework)
+*   **Database:** MySQL
+*   **Frontend:** HTML5, Tailwind CSS (via CDN/local), JavaScript
+*   **Server:** Apache (via XAMPP)
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+## Prerequisites
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+You should have the following installed:
+*   [XAMPP](https://www.apachefriends.org/) (PHP 8.1+ and MySQL)
+*   [Composer](https://getcomposer.org/)
 
-## Setup
+## Installation
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+1.  **Clone the Repository**
+    ```bash
+    git clone https://github.com/yourusername/zero-hunger.git
+    cd zero-hunger
+    ```
 
-## Important Change with index.php
+2.  **Install Dependencies**
+    ```bash
+    composer install
+    ```
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+3.  **Configure Environment**
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+    *   Open `.env` and set your database credentials:
 
-**Please** read the user guide for a better explanation of how CI4 works!
 
-## Repository Management
+4.  **Setup Database**
+    *   Start **Apache** and **MySQL** in XAMPP.
+    *   Create the database named `zero_hunger`
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+    *   Run migrations to create tables:
+        ```bash
+        php spark migrate
+        ```
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+5.  **Run the Application**
+    ```bash
+    php spark serve
+    ```
+        and run at: `http://localhost:8080`
 
-## Server Requirements
+## Default Credentials
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+Use these accounts to log in to the Admin Dashboard (`/admin/login`):
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+| Role | Username | Password |
+| :--- | :--- | :--- |
+| **Super Admin** | `admin` | `password` |
+| **Driver** | `driver1` | `password` |

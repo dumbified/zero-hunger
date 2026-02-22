@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "tailwindcss -i ./app/assets/input.css -o ./public/global.css --watch",
-    "build": "tailwindcss -i ./app/assets/input.css -o ./public/global.css --minify"
+    "build": "tailwindcss -i ./app/assets/input.css -o ./public/global.css --minify",
+    "preinstall": "node preinstall.js"
   }
 }

@@ -60,6 +60,7 @@ class CreateInventoryTable extends Migration
 
         $this->forge->addKey('id', true);
         $this->forge->addKey('donation_id');
+        $this->forge->addForeignKey('donation_id', 'zerohunger', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addKey('status');
         $this->forge->addKey('expiration_date');
         $this->forge->addKey('storage_location');

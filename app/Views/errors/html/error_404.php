@@ -2,83 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title><?= lang('Errors.pageNotFound') ?></title>
-
+    <title>Page not found - Zero Hunger</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="/favicon.ico">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap">
+    <link rel="stylesheet" href="/global.css">
     <style>
-        div.logo {
-            height: 200px;
-            width: 155px;
-            display: inline-block;
-            opacity: 0.08;
-            position: absolute;
-            top: 2rem;
-            left: 50%;
-            margin-left: -73px;
-        }
-        body {
-            height: 100%;
-            background: #fafafa;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            color: #777;
-            font-weight: 300;
-        }
-        h1 {
-            font-weight: lighter;
-            letter-spacing: normal;
-            font-size: 3rem;
-            margin-top: 0;
-            margin-bottom: 0;
-            color: #222;
-        }
-        .wrap {
-            max-width: 1024px;
-            margin: 5rem auto;
-            padding: 2rem;
-            background: #fff;
-            text-align: center;
-            border: 1px solid #efefef;
-            border-radius: 0.5rem;
-            position: relative;
-        }
-        pre {
-            white-space: normal;
-            margin-top: 1.5rem;
-        }
-        code {
-            background: #fafafa;
-            border: 1px solid #efefef;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            display: block;
-        }
-        p {
-            margin-top: 1.5rem;
-        }
-        .footer {
-            margin-top: 2rem;
-            border-top: 1px solid #efefef;
-            padding: 1em 2em 0 2em;
-            font-size: 85%;
-            color: #999;
-        }
-        a:active,
-        a:link,
-        a:visited {
-            color: #dd4814;
-        }
+        .font-playfair { font-family: "Playfair Display", serif; }
+        .err-hero { min-height: 60vh; }
     </style>
 </head>
-<body>
-    <div class="wrap">
-        <h1>404</h1>
 
-        <p>
-            <?php if (ENVIRONMENT !== 'production') : ?>
+    <main class="mx-auto max-w-2xl px-4 py-16 sm:py-24 text-center err-hero flex flex-col items-center justify-center">
+        <p class="text-6xl sm:text-8xl font-bold font-playfair text-[#f2b23a]">404</p>
+        <h1 class="mt-4 text-2xl font-bold text-[#1b1b1b] sm:text-3xl">Page not found</h1>
+        <p class="mt-3 text-[#4a3b2a]">
+            <?php if (ENVIRONMENT !== 'production' && ! empty($message)) : ?>
                 <?= nl2br(esc($message)) ?>
             <?php else : ?>
-                <?= lang('Errors.sorryCannotFind') ?>
+                Oops! We couldn't find that page.
             <?php endif; ?>
         </p>
-    </div>
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <a href="/" class="inline-flex items-center justify-center rounded-lg bg-[#f2b23a] px-6 py-3 font-semibold text-[#1b1b1b] hover:opacity-90">
+                Back to Home
+            </a>
+        </div>
+    </main>
 </body>
 </html>
