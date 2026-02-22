@@ -57,13 +57,14 @@
     <div class="p-6 border-b border-[#e3d6c2]">
         <h3 class="text-xl font-bold">Beneficiaries</h3>
     </div>
-    <div class="overflow-x-auto">
+    <div class="overflow-auto max-h-[60vh]">
         <table class="w-full">
             <thead class="bg-[#efe0c9]">
                 <tr>
                     <th class="px-6 py-3 text-left text-xs font-semibold uppercase">Name</th>
                     <th class="px-6 py-3 text-left text-xs font-semibold uppercase">Type</th>
-                    <th class="px-6 py-3 text-left text-xs font-semibold uppercase">Contact</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold uppercase">Phone</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold uppercase">Email</th>
                     <th class="px-6 py-3 text-left text-xs font-semibold uppercase">Address</th>
                     <th class="px-6 py-3 text-left text-xs font-semibold uppercase">Status</th>
                     <th class="px-6 py-3 text-left text-xs font-semibold uppercase">Actions</th>
@@ -72,21 +73,37 @@
             <tbody class="divide-y divide-[#e3d6c2] text-sm">
                 <?php if (empty($recipients)): ?>
                     <tr>
-                        <td colspan="6" class="px-6 py-8 text-center text-gray-500">
+                        <td colspan="7" class="px-6 py-8 text-center text-gray-500">
                             No recipients found
                         </td>
                     </tr>
                 <?php else: ?>
                     <?php foreach ($recipients as $recipient): ?>
                         <tr class="hover:bg-gray-50">
+                            <!-- Name -->
                             <td class="px-6 py-4 font-semibold"><?= esc($recipient['name']) ?></td>
+
+                            <!-- Type -->
                             <td class="px-6 py-4">
                                 <span class="inline-flex items-center px-2 py-1 rounded text-xs font-semibold bg-blue-100 text-blue-800">
                                     <?= ucfirst($recipient['type']) ?>
                                 </span>
                             </td>
-                            <td class="px-6 py-4 text-sm"><?= esc($recipient['contact_info'] ?? '-') ?></td>
+
+                            <!-- Phone -->
+                            <td class="px-6 py-4">
+                                <span class="text-sm"><?= esc($recipient['phone'] ?? '-') ?></span>
+                            </td>
+
+                            <!-- Email -->
+                            <td class="px-6 py-4">
+                                <span class="text-sm"><?= esc($recipient['email'] ?? '-') ?></span>
+                            </td>
+
+                            <!-- Address -->
                             <td class="px-6 py-4 text-sm"><?= esc($recipient['address'] ?? '-') ?></td>
+
+                            <!-- Status -->
                             <td class="px-6 py-4">
                                 <?php
                                 $status = $recipient['status'] ?? 'unknown';
@@ -97,6 +114,8 @@
                                     <?= esc($statusText) ?>
                                 </span>
                             </td>
+
+                            <!-- Actions -->
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-2">
                                     <a href="<?= site_url('admin/recipients/view/' . $recipient['id']) ?>" class="text-[#f2b23a] hover:underline text-sm">

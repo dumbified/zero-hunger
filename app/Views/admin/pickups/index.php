@@ -54,7 +54,7 @@
             </span>
         </div>
 
-        <div class="grid grid-cols-7 gap-2">
+        <div class="grid grid-cols-7 gap-1.5">
             <?php
             $daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             foreach ($daysOfWeek as $day): ?>
@@ -79,10 +79,10 @@
                 });
                 $isToday = $currentDate === date('Y-m-d');
             ?>
-                <div class="aspect-square border border-[#e3d6c2] rounded-lg p-1.5 flex flex-col <?= $isToday ? 'bg-[#f2b23a]/30 ring-1 ring-[#f2b23a]' : 'bg-[#fffaf2]' ?>">
-                    <div class="text-sm font-semibold text-[#4a3b2a]"><?= $day ?></div>
+                <div class="h-20 md:h-24 border border-[#e3d6c2] rounded-lg p-1 flex flex-col <?= $isToday ? 'bg-[#f2b23a]/30 ring-1 ring-[#f2b23a]' : 'bg-[#fffaf2]' ?>">
+                    <div class="text-xs md:text-sm font-semibold text-[#4a3b2a]"><?= $day ?></div>
                     <?php if (!empty($dayPickups)): ?>
-                        <div class="mt-auto text-xs">
+                        <div class="mt-auto text-[10px] md:text-xs leading-tight">
                             <div class="w-full h-1 bg-purple-500 rounded mb-0.5"></div>
                             <div class="text-gray-600"><?= count($dayPickups) ?> pickup<?= count($dayPickups) > 1 ? 's' : '' ?></div>
                         </div>
@@ -98,7 +98,7 @@
     <div class="p-6 border-b border-[#e3d6c2]">
         <h3 class="text-xl font-bold text-[#4a3b2a]">All Scheduled Pickups</h3>
     </div>
-    <div class="overflow-x-auto">
+    <div class="overflow-auto max-h-[60vh]">
         <table class="w-full">
             <thead class="bg-[#efe0c9]">
                 <tr>

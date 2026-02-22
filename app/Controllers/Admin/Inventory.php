@@ -19,10 +19,13 @@ class Inventory extends BaseController
 
     public function index()
     {
+        // Sync status: set to 'expired' when expiration_date has passed
+        $this->inventoryModel->markExpiredItems();
+
         $status = $this->request->getGet('status');
         $expiring = $this->request->getGet('expiring');
         $search = $this->request->getGet('search');
-        $page = $this->request->getGet('page') ?? 1;
+        $page = max(1, (int) ($this->request->getGet('page') ?? 1));
         $perPage = 20;
 
         $builder = $this->inventoryModel->builder();
@@ -32,33 +35,36 @@ class Inventory extends BaseController
         $builder->select('inventory.*, donations.full_name AS donor_name')
                 ->join('donations', 'donations.id = inventory.donation_id', 'left');
 
-        // Apply filters
+        // Apply filters (qualify columns for JOIN: inventory vs donations both have 'status')
         if ($status && $status !== 'all') {
-            $builder->where('status', $status);
+            $builder->where('inventory.status', $status);
         }
 
         if ($expiring) {
             $today = date('Y-m-d');
             $futureDate = date('Y-m-d', strtotime("+{$expiring} days"));
-            $builder->where('expiration_date >=', $today)
-                ->where('expiration_date <=', $futureDate)
-                ->where('status', 'available');
+            $builder->where('inventory.expiration_date >=', $today)
+                ->where('inventory.expiration_date <=', $futureDate)
+                ->where('inventory.status', 'available');
         }
 
         if ($search) {
             $builder->groupStart()
-                ->like('food_type', $search)
-                ->orLike('storage_location', $search)
+                ->like('inventory.food_type', $search)
+                ->orLike('inventory.storage_location', $search)
                 ->orLike('donations.full_name', $search)
                 ->groupEnd();
         }
 
-        // Get total count for pagination
-        $total = $builder->countAllResults(false);
+        // Get total count for pagination (subquery to avoid countAllResults issues with JOIN)
+        $db = \Config\Database::connect();
+        $compiled = $builder->getCompiledSelect(false);
+        $countSql = "SELECT COUNT(*) AS cnt FROM ({$compiled}) AS sub";
+        $total = (int) $db->query($countSql)->getRow()->cnt;
 
-        // Apply pagination
-        $inventory = $builder->orderBy('expiration_date', 'ASC')
-            ->orderBy('created_at', 'DESC')
+        // Apply pagination and fetch
+        $inventory = $builder->orderBy('inventory.expiration_date', 'ASC')
+            ->orderBy('inventory.created_at', 'DESC')
             ->limit($perPage, ($page - 1) * $perPage)
             ->get()
             ->getResultArray();

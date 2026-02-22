@@ -12,9 +12,11 @@ class RecipientModel extends Model
     protected $allowedFields = [
         'name',
         'type',
-        'contact_info',
+        'phone',
+        'email',
         'address',
         'service_area',
+        'notes',
         'status',
     ];
     protected $useTimestamps = true;

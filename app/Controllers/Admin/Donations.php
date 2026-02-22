@@ -34,10 +34,7 @@ class Donations extends BaseController
                 ->orderBy('created_at', 'DESC')
                 ->paginate($perPage, 'donations');
             $pager = $this->donationModel->pager;
-            $donorName = $donations[0]['full_name'] ?? $donorEmail;
-            if (empty($donations)) {
-                $donorName = $donorEmail;
-            }
+            $donorName = ! empty($donations) ? $donations[0]['full_name'] : $donorEmail;
             $data = [
                 'title' => 'Donations',
                 'pageTitle' => 'Donation Management',
@@ -56,7 +53,7 @@ class Donations extends BaseController
         $db = \Config\Database::connect();
         $builder = $this->donationModel->builder();
         $builder->select('full_name, email, phone, COUNT(*) as donation_count');
-        $builder->groupBy('email');
+        $builder->groupBy(['email', 'full_name', 'phone']);
 
         if ($search) {
             $builder->groupStart()
@@ -242,7 +239,7 @@ class Donations extends BaseController
 
         $builder = $this->donationModel->builder();
         $builder->select('full_name, email, phone, COUNT(*) as donation_count');
-        $builder->groupBy('email');
+        $builder->groupBy(['email', 'full_name', 'phone']);
 
         if ($search) {
             $builder->groupStart()

@@ -24,7 +24,7 @@ class Recipients extends BaseController
     {
         $status = $this->request->getGet('status');
         $search = $this->request->getGet('search');
-        $page = $this->request->getGet('page') ?? 1;
+        $page = max(1, (int) ($this->request->getGet('page') ?? 1));
         $perPage = 20;
 
         $builder = $this->recipientModel->builder();
@@ -36,8 +36,10 @@ class Recipients extends BaseController
         if ($search) {
             $builder->groupStart()
                 ->like('name', $search)
-                ->orLike('contact_info', $search)
+                ->orLike('phone', $search)
+                ->orLike('email', $search)
                 ->orLike('address', $search)
+                ->orLike('notes', $search)
                 ->groupEnd();
         }
 
@@ -69,7 +71,9 @@ class Recipients extends BaseController
             $rules = [
                 'name' => 'required|max_length[255]',
                 'type' => 'required|in_list[individual,organization]',
-                'contact_info' => 'permit_empty',
+                'phone' => 'permit_empty|max_length[32]',
+                'email' => 'permit_empty|valid_email|max_length[255]',
+                'notes' => 'permit_empty|max_length[1000]',
                 'address' => 'permit_empty|max_length[255]',
                 'service_area' => 'permit_empty|max_length[100]',
             ];
@@ -81,7 +85,9 @@ class Recipients extends BaseController
             $data = [
                 'name' => $this->request->getPost('name'),
                 'type' => $this->request->getPost('type'),
-                'contact_info' => $this->request->getPost('contact_info'),
+                'phone' => $this->request->getPost('phone') ?: null,
+                'email' => $this->request->getPost('email') ?: null,
+                'notes' => $this->request->getPost('notes') ?: null,
                 'address' => $this->request->getPost('address'),
                 'service_area' => $this->request->getPost('service_area'),
                 'status' => 'active',
@@ -132,7 +138,9 @@ class Recipients extends BaseController
             $rules = [
                 'name' => 'required|max_length[255]',
                 'type' => 'required|in_list[individual,organization]',
-                'contact_info' => 'permit_empty',
+                'phone' => 'permit_empty|max_length[32]',
+                'email' => 'permit_empty|valid_email|max_length[255]',
+                'notes' => 'permit_empty|max_length[1000]',
                 'address' => 'permit_empty|max_length[255]',
                 'service_area' => 'permit_empty|max_length[100]',
                 'status' => 'required|in_list[active,inactive]',
@@ -145,7 +153,9 @@ class Recipients extends BaseController
             $data = [
                 'name' => $this->request->getPost('name'),
                 'type' => $this->request->getPost('type'),
-                'contact_info' => $this->request->getPost('contact_info'),
+                'phone' => $this->request->getPost('phone') ?: null,
+                'email' => $this->request->getPost('email') ?: null,
+                'notes' => $this->request->getPost('notes') ?: null,
                 'address' => $this->request->getPost('address'),
                 'service_area' => $this->request->getPost('service_area'),
                 'status' => $this->request->getPost('status'),

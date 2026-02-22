@@ -30,9 +30,19 @@
                         <option value="organization" <?= $recipient['type'] === 'organization' ? 'selected' : '' ?>>Organization</option>
                     </select>
                 </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="label p-0 mb-2"><span class="label-text text-sm font-semibold">Phone</span></label>
+                        <input type="text" name="phone" value="<?= old('phone', $recipient['phone'] ?? '') ?>" class="input input-bordered w-full bg-[#fffaf2] border-[#e3d6c2] focus:outline-none focus:border-[#f2b23a] focus:ring-1 focus:ring-[#f2b23a]" placeholder="012-3456789">
+                    </div>
+                    <div>
+                        <label class="label p-0 mb-2"><span class="label-text text-sm font-semibold">Email</span></label>
+                        <input type="email" name="email" value="<?= old('email', $recipient['email'] ?? '') ?>" class="input input-bordered w-full bg-[#fffaf2] border-[#e3d6c2] focus:outline-none focus:border-[#f2b23a] focus:ring-1 focus:ring-[#f2b23a]" placeholder="you@email.com">
+                    </div>
+                </div>
                 <div>
-                    <label class="label p-0 mb-2"><span class="label-text text-sm font-semibold">Contact Information</span></label>
-                    <textarea name="contact_info" rows="3" class="textarea textarea-bordered w-full bg-[#fffaf2] border-[#e3d6c2] focus:outline-none focus:border-[#f2b23a] focus:ring-1 focus:ring-[#f2b23a]"><?= old('contact_info', $recipient['contact_info']) ?></textarea>
+                    <label class="label p-0 mb-2"><span class="label-text text-sm font-semibold">Notes</span></label>
+                    <textarea name="notes" rows="3" class="textarea textarea-bordered w-full bg-[#fffaf2] border-[#e3d6c2] focus:outline-none focus:border-[#f2b23a] focus:ring-1 focus:ring-[#f2b23a]"><?= old('notes', $recipient['notes'] ?? '') ?></textarea>
                 </div>
                 <div>
                     <label class="label p-0 mb-2"><span class="label-text text-sm font-semibold">Address</span></label>

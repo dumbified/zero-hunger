@@ -10,7 +10,7 @@
             + Add User
         </a>
     </div>
-    <div class="overflow-x-auto">
+    <div class="overflow-auto max-h-[60vh]">
         <table class="w-full">
             <thead class="bg-[#efe0c9]">
                 <tr>

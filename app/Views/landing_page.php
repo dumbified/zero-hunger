@@ -24,6 +24,7 @@
                 </div>
                 <nav class="flex items-center gap-3 text-base sm:gap-8 sm:text-lg">
                     <a href="#about" class="nav-link">About us</a>
+                    <a href="#what-we-do" class="nav-link">What we do</a>
                     <button class="btn-primary" id="openDonateNav">Donate</button>
                 </nav>
             </div>
@@ -73,6 +74,43 @@
                     </div>
                 </div>
             </section>
+            <hr class="mx-auto w-full max-w-6xl border-t">
+            <section id="what-we-do" class="relative mx-auto flex min-h-[100svh] w-full max-w-6xl flex-col items-center justify-center scroll-mt-24 px-4 py-10 snap-start sm:px-6">
+                <img src="<?= base_url('logo.png') ?>" alt="" class="pointer-events-none absolute left-1/2 top-1/2 w-[420px] -translate-x-1/2 -translate-y-1/2 opacity-10 sm:w-[720px]">
+                <div class="relative z-10 max-w-4xl text-left">
+                    <h2 class="text-4xl font-bold font-serif sm:text-7xl">What we do</h2>
+                    <p class="mt-3 text-base font-times leading-relaxed sm:mt-4 sm:text-xl">
+                        We partner with local businesses and communities to rescue surplus food,
+                        sort it safely, and redirect it to families and organisations who need it most.
+                    </p>
+                </div>
+                <div class="relative z-10 mt-6 grid w-full max-w-4xl gap-6 sm:mt-8 sm:gap-8 sm:grid-cols-3">
+                    <div class="rounded-xl bg-white shadow-md overflow-hidden">
+                        <div class="aspect-square w-full bg-[#fffaf2]">
+                            <img src="<?= base_url('collect.png') ?>" alt="Collecting surplus food" class="h-full w-full object-cover">
+                        </div>
+                        <div class="p-4 text-left">
+                            <p class="font-times text-base font-semibold">Collecting surplus food</p>
+                        </div>
+                    </div>
+                    <div class="rounded-xl bg-white shadow-md overflow-hidden">
+                        <div class="aspect-square w-full bg-[#fffaf2]">
+                            <img src="<?= base_url('sort.png') ?>" alt="Sorting and packing donations" class="h-full w-full object-cover">
+                        </div>
+                        <div class="p-4 text-left">
+                            <p class="font-times text-base font-semibold">Sorting and packing donations</p>
+                        </div>
+                    </div>
+                    <div class="rounded-xl bg-white shadow-md overflow-hidden">
+                        <div class="aspect-square w-full bg-[#fffaf2]">
+                            <img src="<?= base_url('deliver.png') ?>" alt="Delivering to communities" class="h-full w-full object-cover">
+                        </div>
+                        <div class="p-4 text-left">
+                            <p class="font-times text-base font-semibold">Delivering to communities</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <footer class="mt-6 w-full bg-[#efe0c9]">
                 <div class="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-4 px-4 py-6 sm:flex-row sm:gap-0 sm:px-6">    
                     <div>
@@ -87,6 +125,11 @@
                         <p class="mt-2 text-center font-times text-sm font-semibold sm:mt-4 sm:text-lg">All rights reserved © 2026 Zero Hunger</p>
                     </div>
                     <div>
+                        <p class="mt-2 text-center font-times text-sm sm:mt-4 sm:text-lg">
+                            <a id="openNeedHelpNav" href="javascript:void(0)" class="underline underline-offset-4 hover:text-[#f2b23a]">Need help?</a>
+                        </p>
+                    </div>
+                    <div>
                         <p class="mt-2 text-center font-times text-sm sm:mt-4 sm:text-lg"><span class="font-semibold">Contact:</span><a href="mailto:hello@zerohunger.org" class="contact-link"> hello@zerohunger.org</a></p>
                     </div>
                 </div>
@@ -94,6 +137,23 @@
         </main>
 
         <?= view('components/donate') ?>
+        <?= view('components/request_help') ?>
+
+        <?php if (session()->get('success')): ?>
+        <!-- Success / confirmation dialog (donate or request help) -->
+        <input id="successModalToggle" type="checkbox" class="modal-toggle" checked>
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="successModalTitle">
+            <div class="modal-box max-w-md rounded-2xl bg-white shadow-xl border border-[#e3d6c2]">
+                <h3 id="successModalTitle" class="text-xl font-bold text-[#4a3b2a]">Thank you!</h3>
+                <p class="mt-2 text-[#1b1b1b]"><?= esc(session()->get('success')) ?></p>
+                <p class="mt-3 text-sm text-gray-600">You will receive a contact from us shortly.</p>
+                <div class="modal-action">
+                    <label for="successModalToggle" class="btn bg-[#f2b23a] text-[#1b1b1b] border-0 hover:bg-[#e8a72f]">OK</label>
+                </div>
+            </div>
+            <label class="modal-backdrop" for="successModalToggle">Close</label>
+        </div>
+        <?php endif; ?>
 
     <!-- -->
 

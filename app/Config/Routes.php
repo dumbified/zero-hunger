@@ -7,6 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 $routes->post('donate', 'Home::donate');
+$routes->post('request-help', 'Home::requestHelp');
 
 // Admin routes
 $routes->group('admin', ['filter' => 'auth'], function($routes) {

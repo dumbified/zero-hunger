@@ -22,8 +22,12 @@
                         </p>
                     </div>
                     <div>
-                        <label class="text-sm font-semibold text-gray-600">Contact Information</label>
-                        <p class="mt-1"><?= esc($recipient['contact_info'] ?? '-') ?></p>
+                        <label class="text-sm font-semibold text-gray-600">Phone</label>
+                        <p class="mt-1"><?= esc($recipient['phone'] ?? '-') ?></p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-gray-600">Email</label>
+                        <p class="mt-1"><?= esc($recipient['email'] ?? '-') ?></p>
                     </div>
                     <div>
                         <label class="text-sm font-semibold text-gray-600">Address</label>
@@ -32,6 +36,10 @@
                     <div>
                         <label class="text-sm font-semibold text-gray-600">Service Area</label>
                         <p class="mt-1"><?= esc($recipient['service_area'] ?? '-') ?></p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-semibold text-gray-600">Notes</label>
+                        <p class="mt-1"><?= esc($recipient['notes'] ?? '-') ?></p>
                     </div>
                     <div>
                         <label class="text-sm font-semibold text-gray-600">Status</label>

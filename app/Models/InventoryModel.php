@@ -22,6 +22,22 @@ class InventoryModel extends Model
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
 
+    /**
+     * Set status to 'expired' for all items whose expiration_date is in the past.
+     * Call this when loading inventory so status stays in sync.
+     */
+    public function markExpiredItems(): int
+    {
+        $today = date('Y-m-d');
+        $builder = $this->builder();
+        $builder->where('expiration_date <', $today);
+        $builder->where('status !=', 'expired');
+        $builder->set('status', 'expired');
+        $builder->set('updated_at', date('Y-m-d H:i:s'));
+        $builder->update();
+        return $this->db->affectedRows();
+    }
+
     public function getExpiringItems(int $days = 7)
     {
         $today = date('Y-m-d');
@@ -37,7 +53,6 @@ class InventoryModel extends Model
     public function getExpiredItems()
     {
         return $this->where('expiration_date <', date('Y-m-d'))
-            ->where('status', 'available')
             ->orderBy('expiration_date', 'ASC')
             ->findAll();
     }

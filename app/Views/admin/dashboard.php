@@ -5,7 +5,7 @@
 <div class="max-w-6xl mx-auto space-y-8">
     <!-- Overview cards - 4 in one row using DaisyUI cards -->
     <div class="grid grid-cols-4 md:grid-cols-4 xl:grid-cols-4 gap-4">
-        <div class="card bg-base-100 shadow-md border border-[#e3d6c2]">
+        <div class="card bg-white shadow-md border border-[#e3d6c2]">
             <div class="card-body">
                 <p class="text-sm text-gray-600">Donors this month</p>
                 <h2 class="card-title text-3xl text-[#f2b23a]">
@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <div class="card bg-base-100 shadow-md border border-[#e3d6c2]">
+        <div class="card bg-white shadow-md border border-[#e3d6c2]">
             <div class="card-body">
                 <p class="text-sm text-gray-600">Active inventory</p>
                 <h2 class="card-title text-3xl text-[#6cc1f5]">
@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <div class="card bg-base-100 shadow-md border border-[#e3d6c2]">
+        <div class="card bg-white shadow-md border border-[#e3d6c2]">
             <div class="card-body">
                 <p class="text-sm text-gray-600">Pending pickups</p>
                 <h2 class="card-title text-3xl text-[#f06b5e]">
@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        <div class="card bg-base-100 shadow-md border border-[#e3d6c2]">
+        <div class="card bg-white shadow-md border border-[#e3d6c2]">
             <div class="card-body">
                 <p class="text-sm text-gray-600">Expiring soon</p>
                 <h2 class="card-title text-3xl text-orange-500">
@@ -48,7 +48,7 @@
 
     <!-- Donation Status + Expiring soon list -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="card bg-base-100 shadow-md border border-[#e3d6c2]">
+        <div class="card bg-white shadow-md border border-[#e3d6c2]">
             <div class="card-body">
                 <h3 class="card-title mb-2">Donation status</h3>
                 <p class="text-xs text-gray-500 mb-4">Current breakdown of all donation records.</p>
@@ -90,7 +90,7 @@
             </div>
         </div>
 
-        <div class="card bg-base-100 shadow-md border border-[#e3d6c2]">
+        <div class="card bg-white shadow-md border border-[#e3d6c2]">
             <div class="card-body">
                 <div class="flex items-center justify-between mb-2">
                     <h3 class="card-title">Expiring soon</h3>
@@ -113,7 +113,7 @@
     </div>
 
     <!-- Recent Donations -->
-    <div class="card bg-base-100 shadow-md border border-[#e3d6c2]">
+    <div class="card bg-white shadow-md border border-[#e3d6c2]">
         <div class="card-body border-b border-[#e3d6c2] pb-4">
             <div class="flex items-center justify-between">
                 <h3 class="card-title">Recent donations</h3>
@@ -122,8 +122,8 @@
                 </a>
             </div>
         </div>
-        <div class="overflow-x-auto">
-            <table class="table table-sm table-zebra w-full">
+        <div class="overflow-auto max-h-[60vh] bg-white">
+            <table class="table table-sm w-full bg-white">
                 <thead class="bg-[#efe0c9]">
                     <tr>
                         <th class="text-center text-xs font-semibold uppercase">ID</th>
@@ -135,7 +135,7 @@
                         <th class="text-center text-xs font-semibold uppercase">Actions</th>
                     </tr>
                 </thead>
-                <tbody class="text-sm">
+                <tbody class="text-sm bg-white">
                 <?php if (empty($recentDonations)): ?>
                     <tr>
                         <td colspan="7" class="px-6 py-8 text-center text-gray-500">

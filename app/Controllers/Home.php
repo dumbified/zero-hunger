@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\DonationModel;
+use App\Models\RecipientModel;
 
 class Home extends BaseController
 {
@@ -43,5 +44,41 @@ class Home extends BaseController
         ]);
 
         return redirect()->to('/')->with('success', 'Thanks for your donation!');
+    }
+
+    public function requestHelp()
+    {
+        $rules = [
+            'type' => 'required|in_list[individual,organization]',
+            'name' => 'required|min_length[2]|max_length[255]',
+            'phone' => 'required|regex_match[/^\d{3}-\d{3,4}\s?\d{4}$/]',
+            'email' => 'required|valid_email|max_length[255]',
+            'address' => 'required|max_length[255]',
+            'service_area' => 'required|max_length[100]',
+            'notes' => 'permit_empty|max_length[1000]',
+        ];
+
+        if (! $this->validate($rules)) {
+            return redirect()->to('/')->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        $phone = (string) $this->request->getPost('phone');
+        $email = (string) $this->request->getPost('email');
+        $notes = trim((string) $this->request->getPost('notes'));
+
+        $model = new RecipientModel();
+        $model->insert([
+            'name' => $this->request->getPost('name'),
+            'type' => $this->request->getPost('type'),
+            'phone' => $phone,
+            'email' => $email,
+            'address' => $this->request->getPost('address'),
+            'service_area' => $this->request->getPost('service_area'),
+            'notes' => $notes !== '' ? $notes : null,
+            // New requests should be reviewed/approved by admin first
+            'status' => 'inactive',
+        ]);
+
+        return redirect()->to('/')->with('success', 'Request submitted! We will contact you soon.');
     }
 }

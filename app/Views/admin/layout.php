@@ -91,11 +91,6 @@
                     <div class="flex items-center gap-4">
                         <h2 class="text-2xl font-bold"><?= isset($pageTitle) ? esc($pageTitle) : 'Dashboard' ?></h2>
                     </div>
-                    <div class="flex items-center gap-4">
-                        <a href="<?= site_url('/') ?>" target="_blank" class="text-sm text-gray-600 hover:text-[#f2b23a]">
-                            View Site →
-                        </a>
-                    </div>
                 </div>
             </header>
 

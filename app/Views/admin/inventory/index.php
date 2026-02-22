@@ -97,7 +97,7 @@
     <div class="p-6 border-b border-[#e3d6c2]">
         <h3 class="text-xl font-bold">Inventory Items</h3>
     </div>
-    <div class="overflow-x-auto">
+    <div class="overflow-auto max-h-[60vh]">
         <table class="w-full">
             <thead class="bg-[#efe0c9]">
                 <tr>
