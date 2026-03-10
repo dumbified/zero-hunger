@@ -46,46 +46,14 @@
         </div>
     </div>
 
-    <!-- Donation Status + Expiring soon list -->
+    <!-- Donation Status (Chart.js) + Expiring soon list -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div class="card bg-white shadow-md border border-[#e3d6c2]">
             <div class="card-body">
                 <h3 class="card-title mb-2">Donation status</h3>
                 <p class="text-xs text-gray-500 mb-4">Current breakdown of all donation records.</p>
-                <div class="space-y-3">
-            <?php
-            $statusLabels = [
-                'pending' => 'Pending',
-                'confirmed' => 'Confirmed',
-                'scheduled' => 'Scheduled',
-                'picked_up' => 'Picked Up',
-                'completed' => 'Completed',
-                'cancelled' => 'Cancelled',
-            ];
-            $statusColors = [
-                'pending' => 'bg-yellow-200',
-                'confirmed' => 'bg-blue-200',
-                'scheduled' => 'bg-purple-200',
-                'picked_up' => 'bg-green-200',
-                'completed' => 'bg-green-400',
-                'cancelled' => 'bg-red-200',
-            ];
-            $totalStatus = array_sum(array_column($statusBreakdown, 'count'));
-            foreach ($statusBreakdown as $status):
-                $label = $statusLabels[$status['status']] ?? ucfirst($status['status']);
-                $color = $statusColors[$status['status']] ?? 'bg-gray-200';
-                $pct = $totalStatus > 0 ? min(100, ($status['count'] / $totalStatus) * 100) : 0;
-            ?>
-                <div class="flex items-center justify-between gap-3">
-                    <span class="text-sm"><?= $label ?></span>
-                    <div class="flex items-center gap-2 flex-1 max-w-[220px]">
-                        <div class="flex-1 h-3 bg-gray-200 rounded-full overflow-hidden">
-                            <div class="<?= $color ?> h-full rounded-full" style="width: <?= $pct ?>%"></div>
-                        </div>
-                        <span class="font-semibold text-sm w-6 text-right"><?= $status['count'] ?></span>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+                <div class="w-full max-w-md mx-auto">
+                    <canvas id="donationStatusChart" aria-label="Donation status chart" role="img"></canvas>
                 </div>
             </div>
         </div>
@@ -113,7 +81,7 @@
     </div>
 
     <!-- Recent Donations -->
-    <div class="card bg-white shadow-md border border-[#e3d6c2]">
+    <div class="card bg-white shadow-md border border-[#e3d6c2] mt-6">
         <div class="card-body border-b border-[#e3d6c2] pb-4">
             <div class="flex items-center justify-between">
                 <h3 class="card-title">Recent donations</h3>
@@ -179,6 +147,69 @@
             </table>
         </div>
     </div>
+
+<?php
+// Prepare data for Chart.js
+$chartStatusLabels = [];
+$chartStatusCounts = [];
+foreach ($statusBreakdown as $row) {
+    $key = $row['status'];
+    $labelMap = [
+        'pending'   => 'Pending',
+        'confirmed' => 'Confirmed',
+        'scheduled' => 'Scheduled',
+        'picked_up' => 'Picked Up',
+        'completed' => 'Completed',
+        'cancelled' => 'Cancelled',
+    ];
+    $chartStatusLabels[] = $labelMap[$key] ?? ucfirst($key);
+    $chartStatusCounts[] = (int) $row['count'];
+}
+?>
+
+<script>
+    (function () {
+        const canvas = document.getElementById('donationStatusChart');
+        if (!canvas || typeof Chart === 'undefined') return;
+
+        const labels = <?= json_encode($chartStatusLabels) ?>;
+        const data = <?= json_encode($chartStatusCounts) ?>;
+
+        const hasData = Array.isArray(data) && data.some((v) => v > 0);
+        if (!hasData) {
+            canvas.parentElement.innerHTML = '<p class="text-sm text-gray-500 text-center">No donation data available yet.</p>';
+            return;
+        }
+
+        new Chart(canvas.getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels,
+                datasets: [{
+                    data,
+                    backgroundColor: [
+                        '#FACC15', // pending
+                        '#60A5FA', // confirmed
+                        '#A855F7', // scheduled
+                        '#4ADE80', // picked up
+                        '#22C55E', // completed
+                        '#F97373', // cancelled
+                    ],
+                    borderWidth: 1,
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                },
+            },
+        });
+    })();
+</script>
 
 </div><!-- /.max-w-6xl -->
 

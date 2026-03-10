@@ -6,6 +6,8 @@
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap">
     <link rel="stylesheet" href="/global.css">
+    <!-- Chart.js for dashboard visualisations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="min-h-screen bg-[#efe0c9]">
     <div class="flex h-screen overflow-hidden">
